@@ -51,8 +51,8 @@ defmodule Logger.Backends.JSON do
     data = %{level: level, message: msg, pid: pid_str, node: node()}
     |> Map.merge(md
                  |> Iteraptor.to_flatmap("_")
-                 |> Stream.filter(&filter_keys/1)
                  |> Stream.filter(&filter_nils/1)
+                 |> Stream.filter(&filter_keys/1)
                  |> Stream.map(&(&1 |> prettify_keys |> stringify_values))
                  |> Enum.into(Map.new))
     try do
